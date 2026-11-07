@@ -1,0 +1,11 @@
+[Unit]
+Description=KefuBao conversation summary and reusable skill extraction
+After=network-online.target docker.service kefubao-message-sync.service
+Wants=network-online.target docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/kefubao/wecom-miniprogram
+EnvironmentFile=/opt/kefubao/wecom-miniprogram/.env
+ExecStart=/opt/kefubao/wecom-miniprogram/.venv/bin/python -m backend.services.summary_maintenance_service
+User=ubuntu

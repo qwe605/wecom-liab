@@ -1,0 +1,22 @@
+[Unit]
+Description=KefuBao lightweight bge-small Skill search
+After=network.target docker.service
+Wants=docker.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/kefubao/wecom-miniprogram
+EnvironmentFile=/opt/kefubao/wecom-miniprogram/.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/kefubao/wecom-miniprogram/.venv-embedding/bin/python -m uvicorn backend.vector_app:app --host 127.0.0.1 --port 8791 --workers 1
+Restart=always
+RestartSec=5
+MemoryMax=350M
+MemoryHigh=300M
+CPUQuota=75%
+TasksMax=64
+NoNewPrivileges=true
+User=ubuntu
+
+[Install]
+WantedBy=multi-user.target

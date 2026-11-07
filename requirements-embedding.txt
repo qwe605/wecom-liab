@@ -1,0 +1,7 @@
+# -*- coding: utf-8 -*-
+# 轻量向量服务独立安装；主 FastAPI 环境不安装这些依赖，避免重复加载模型。
+-r requirements.txt
+fastembed>=0.7,<1
+hnswlib>=0.8,<1
+numpy>=1.26,<3
+

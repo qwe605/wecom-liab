@@ -1,0 +1,449 @@
+/* 全局设计变量和浏览器基础重置。 */
+:root { color: #172033; background: #f4f6f8; font-family: "Microsoft YaHei", Arial, sans-serif; font-size: 15px; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+button, input, select, textarea { font: inherit; }
+button { min-height: 40px; border: 1px solid #d6dce5; border-radius: 6px; background: #fff; color: #172033; cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: .55; }
+.primary { border-color: #1677ff; background: #1677ff; color: #fff; font-weight: 700; }
+.danger { color: #cf1322; }
+.full { width: 100%; margin-top: 10px; }
+.compact { min-height: 34px; padding: 0 14px; }
+/* 标题和侧边栏主体布局：宽度适配企业微信右侧工具栏。 */
+h1, h2, p { margin-top: 0; }
+h1 { margin-bottom: 6px; font-size: 24px; }
+h2 { margin-bottom: 5px; font-size: 18px; }
+.sidebar-shell { max-width: 540px; min-height: 100vh; padding: 18px; margin: auto; }
+.page-header, .review-header, .section-head, .review-meta { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.page-header p, .section-head p, .review-header p { color: #697386; margin-bottom: 0; }
+.status-dot { width: 10px; height: 10px; margin-top: 9px; border-radius: 50%; background: #c5ccd6; }
+.status-dot.online { background: #12b886; }
+.panel { margin-top: 14px; padding: 16px; border: 1px solid #dfe3e8; border-radius: 8px; background: #fff; }
+.identity { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.identity span { display: block; margin-bottom: 6px; color: #697386; font-size: 13px; }
+.history-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+select, input, textarea { width: 100%; border: 1px solid #d6dce5; border-radius: 6px; background: #fff; padding: 10px 12px; color: #172033; }
+textarea { resize: vertical; line-height: 1.65; }
+.message-list { max-height: 380px; overflow: auto; }
+.message { margin: 8px 0; padding: 11px; border: 1px solid #e1e5ea; border-radius: 6px; background: #f8fafc; }
+.message.staff { border-left: 3px solid #1677ff; }
+.message.customer { border-left: 3px solid #12b886; }
+.message div { display: flex; justify-content: space-between; gap: 10px; }
+.message time { color: #7b8494; font-size: 12px; }
+.message p { margin: 8px 0 0; line-height: 1.55; white-space: pre-wrap; }
+.button-grid, .review-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.review-actions.archived-actions { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+input[readonly], textarea[readonly], fieldset:disabled { background: #f4f6f8; color: #667085; }
+.model-tag, .score { padding: 4px 8px; border-radius: 5px; background: #eef4ff; color: #155acb; font-size: 12px; white-space: nowrap; }
+.error-banner { padding: 11px 13px; margin: 14px 0; border: 1px solid #ffccc7; border-radius: 6px; background: #fff2f0; color: #a8071a; }
+.success-banner { padding: 11px 13px; margin: 14px 0; border: 1px solid #b7eb8f; border-radius: 6px; background: #f6ffed; color: #237804; }
+.empty { padding: 24px 0; color: #7b8494; text-align: center; }
+/* 侧边栏次要信息默认折叠，标题行保持稳定高度，避免上下文和纪要挤占回复操作。 */
+.collapsible-panel { padding: 0; overflow: hidden; }
+.collapsible-heading, .reply-detail summary, .answer-evidence summary { position: relative; display: flex; align-items: center; min-height: 58px; padding: 11px 42px 11px 16px; cursor: pointer; list-style: none; }
+.collapsible-heading::-webkit-details-marker, .reply-detail summary::-webkit-details-marker, .answer-evidence summary::-webkit-details-marker { display: none; }
+.collapsible-heading::after, .reply-detail summary::after, .answer-evidence summary::after { position: absolute; right: 16px; content: "›"; color: #7a8494; font-size: 24px; line-height: 1; transform: rotate(90deg); transition: transform .16s ease; }
+details[open] > .collapsible-heading::after, .reply-detail[open] > summary::after, .answer-evidence[open] > summary::after { transform: rotate(-90deg); }
+.collapsible-heading span { min-width: 0; }
+.collapsible-heading strong { display: block; font-size: 17px; }
+.collapsible-heading small { display: block; margin-top: 3px; color: #748095; font-size: 12px; font-weight: 400; }
+.collapsible-body { padding: 0 16px 16px; border-top: 1px solid #edf0f4; }
+.context-actions { display: grid; grid-template-columns: 1fr 90px 1fr; gap: 8px; padding: 12px 0; }
+.summary-text { margin: 14px 0 0; color: #334155; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.summary-section { padding-top: 12px; margin-top: 12px; border-top: 1px solid #e5e9ef; }
+.summary-section h3 { margin: 0 0 7px; color: #4f596b; font-size: 14px; }
+.summary-section ul { padding-left: 20px; margin: 0; }
+.summary-section li { margin: 5px 0; line-height: 1.55; overflow-wrap: anywhere; }
+.reply-heading { align-items: center; }
+.reply-detail, .answer-evidence { margin: 10px 0; overflow: hidden; border: 1px solid #dfe5ec; border-radius: 6px; background: #f8fafc; }
+.reply-detail summary, .answer-evidence summary { min-height: 44px; padding-top: 8px; padding-bottom: 8px; font-weight: 600; }
+.reply-detail[open] summary, .answer-evidence[open] summary { border-bottom: 1px solid #dfe5ec; }
+.reply-detail p { margin: 0; padding: 12px 14px; color: #526071; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.diagnostic-content { padding: 12px 14px 4px; }
+.diagnostic-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.diagnostic-tags span { padding: 4px 8px; border: 1px solid #cfe0f5; border-radius: 4px; background: #eef5ff; color: #24578f; font-size: 12px; }
+.diagnostic-note { margin: 10px 0 4px; color: #697386; font-size: 13px; }
+.evidence-list { padding: 0 14px 0 36px; margin: 8px 0 12px; }
+.evidence-list li { padding: 7px 0; }
+.evidence-list a, .evidence-list strong { color: #1f4f82; font-weight: 600; text-decoration: none; }
+.evidence-list small { display: block; margin-top: 3px; color: #7a8494; }
+.no-evidence, .evidence-warning { margin: 8px 14px 12px; padding: 9px 10px; border-radius: 5px; font-size: 13px; line-height: 1.5; }
+.no-evidence { border: 1px solid #f0d49b; background: #fff9ed; color: #79520c; }
+.evidence-warning { border-left: 3px solid #d59b2a; background: #fffaf0; color: #79520c; }
+/* 独立审核台使用更宽的工作区，便于批量比较和编辑候选知识。 */
+.review-shell { max-width: 1180px; min-height: 100vh; padding: 28px; margin: auto; }
+.review-header { padding-bottom: 20px; border-bottom: 1px solid #dde2e8; }
+.review-toolbar { display: grid; justify-items: end; gap: 10px; }
+.filters { display: grid; grid-template-columns: 160px 80px; gap: 8px; }
+.view-switch { display: grid; grid-template-columns: repeat(3, 1fr); width: 360px; }
+.view-switch button { border-radius: 0; }
+.view-switch button:first-child { border-radius: 6px 0 0 6px; }
+.view-switch button:last-child { border-radius: 0 6px 6px 0; }
+.view-switch button.active { border-color: #1677ff; background: #eef5ff; color: #155acb; font-weight: 700; }
+.login-panel { max-width: 420px; margin: 60px auto; }
+.login-hint { color: #697386; line-height: 1.5; }
+label { display: block; margin: 12px 0; color: #4f596b; }
+label input, label textarea { margin-top: 6px; }
+.review-workspace { display: grid; grid-template-columns: minmax(230px, 280px) minmax(300px, 380px) minmax(420px, 1fr); height: calc(100vh - 205px); min-height: 590px; max-height: 850px; margin-top: 18px; border: 1px solid #dfe3e8; background: #fff; }
+.review-navigation, .review-candidate-list { display: grid; grid-template-rows: 50px minmax(0, 1fr) auto; min-width: 0; min-height: 0; border-right: 1px solid #dfe3e8; }
+.review-filter-scroll, .review-list-scroll, .review-detail { overflow: auto; }
+.review-filter-scroll { padding: 10px 14px 16px; }
+.review-filter-scroll label { margin: 10px 0; }
+.review-candidate-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 72px; height: auto; padding: 11px 13px; border: 0; border-bottom: 1px solid #e5e9ef; border-radius: 0; text-align: left; }
+.review-candidate-row:hover, .review-candidate-row.active { background: #eef5ff; }
+.review-candidate-row.active { box-shadow: inset 3px 0 #1677ff; }
+.review-candidate-row span { min-width: 0; }
+.review-candidate-row strong, .review-candidate-row small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.review-candidate-row small { margin-top: 6px; color: #7b8494; }
+.review-candidate-row b { flex: 0 0 auto; padding: 4px 7px; border-radius: 5px; background: #eef4ff; color: #155acb; font-size: 12px; }
+.review-detail-form { padding: 18px; }
+.review-detail-empty { padding-top: 240px; }
+.taxonomy-editor { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 10px; padding: 10px 12px; margin: 12px 0; border: 1px solid #dfe3e8; border-radius: 6px; }
+.taxonomy-editor legend { padding: 0 6px; color: #4f596b; font-weight: 700; }
+.taxonomy-editor label { min-width: 0; }
+.taxonomy-panel { margin-top: 18px; }
+.wiki-toolbar { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 14px; }
+.wiki-toolbar p { margin-bottom: 0; color: #697386; }
+.wiki-toolbar-actions { display: grid; grid-template-columns: minmax(220px, 340px) 68px 68px; gap: 8px; }
+.wiki-workspace { display: grid; grid-template-columns: minmax(240px, 300px) minmax(260px, 340px) minmax(380px, 1fr); height: calc(100vh - 230px); min-height: 560px; max-height: 820px; border: 1px solid #dfe3e8; background: #fff; }
+.wiki-navigation, .wiki-page-list, .wiki-detail { min-width: 0; min-height: 0; }
+.wiki-navigation, .wiki-page-list { display: grid; grid-template-rows: 50px minmax(0, 1fr) auto; border-right: 1px solid #dfe3e8; }
+.wiki-pane-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 12px; border-bottom: 1px solid #e5e9ef; background: #f8fafc; }
+.wiki-pane-head small { margin-left: 8px; color: #7b8494; font-weight: 400; }
+.wiki-pane-head span { display: flex; gap: 5px; }
+.icon-button { width: 30px; min-height: 30px; padding: 0; font-size: 18px; line-height: 1; }
+.wiki-tree-scroll, .wiki-page-scroll, .wiki-detail { overflow: auto; }
+.wiki-tree-scroll { padding: 8px 0; }
+.wiki-tree-node { display: flex; align-items: center; min-height: 38px; padding-right: 8px; }
+.wiki-tree-node:hover, .wiki-tree-node.selected { background: #eef5ff; }
+.tree-toggle, .tree-toggle-placeholder { flex: 0 0 26px; width: 26px; }
+.tree-toggle { min-height: 28px; padding: 0; border: 0; background: transparent; color: #526071; }
+.tree-node-label { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: calc(100% - 26px); min-height: 36px; padding: 0 4px; overflow: hidden; border: 0; background: transparent; text-align: left; }
+.tree-node-label span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tree-node-label small { flex: 0 0 auto; color: #7b8494; }
+.wiki-page-row { display: block; width: 100%; min-height: 62px; height: auto; padding: 11px 13px; border: 0; border-bottom: 1px solid #e5e9ef; border-radius: 0; text-align: left; }
+.wiki-page-row:hover, .wiki-page-row.active { background: #eef5ff; }
+.wiki-page-row.active { box-shadow: inset 3px 0 #1677ff; }
+.wiki-page-row strong, .wiki-page-row small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wiki-page-row small { margin-top: 6px; color: #7b8494; }
+.skill-leaf-actions, .message-actions, .admin-message footer, .drawer-head, .drawer-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.wiki-editor { padding: 18px; }
+.wiki-detail-empty { padding-top: 220px; }
+.review-meta { color: #697386; font-size: 13px; }
+.source-toggle { width: 100%; min-height: 36px; color: #155acb; background: #f8fafc; }
+.skill-source { max-height: 360px; padding: 12px; margin-top: 10px; overflow: auto; border: 1px solid #dfe3e8; border-radius: 6px; background: #f8fafc; }
+.source-head, .source-message header { display: flex; justify-content: space-between; gap: 12px; }
+.source-head { padding-bottom: 9px; color: #4f596b; }
+.source-head span, .source-message time, .source-message small { color: #7b8494; font-size: 12px; }
+.source-warning { padding: 9px; margin: 0; border: 1px solid #ffe58f; border-radius: 5px; background: #fffbe6; color: #874d00; line-height: 1.5; }
+.source-note { color: #697386; }
+.source-message { padding: 10px; margin-top: 8px; border-left: 3px solid #12b886; background: #fff; }
+.source-message.staff { border-left-color: #1677ff; }
+.source-message p { margin: 7px 0; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+/* 窄屏时把审核卡片和筛选器收为单列，防止文字与按钮重叠。 */
+@media (max-width: 980px) { .wiki-workspace, .review-workspace { grid-template-columns: minmax(220px, 280px) minmax(260px, 1fr); } .wiki-detail, .review-detail { position: fixed; z-index: 25; top: 0; right: 0; width: min(620px, 94vw); height: 100vh; background: #fff; box-shadow: -8px 0 24px rgba(29, 45, 68, .14); } .wiki-detail:has(.wiki-detail-empty), .review-detail:has(.review-detail-empty) { display: none; } }
+@media (max-width: 620px) { .review-shell { padding: 16px; } .review-header { display: block; } .review-toolbar { justify-items: stretch; margin-top: 14px; } .admin-nav { justify-content: flex-start; } .view-switch { width: 100%; } .filters { grid-template-columns: 1fr 80px; } .taxonomy-editor { grid-template-columns: 1fr; } .wiki-toolbar { display: block; } .wiki-toolbar-actions { grid-template-columns: minmax(0, 1fr) 62px 62px; margin-top: 12px; } .wiki-workspace, .review-workspace { grid-template-columns: minmax(190px, 42%) minmax(0, 1fr); height: calc(100vh - 245px); min-height: 500px; } }
+
+/* 聊天记录管理台采用工作区布局，列表与消息区域均保持稳定尺寸。 */
+.records-shell { max-width: 1440px; min-height: 100vh; padding: 24px; margin: auto; }
+.records-header, .records-section-head, .conversation-title, .admin-message header, .pager, .admin-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.records-header { align-items: flex-start; padding-bottom: 18px; border-bottom: 1px solid #dde2e8; }
+.records-header p, .records-section-head p { margin-bottom: 0; color: #697386; }
+.admin-nav a { color: #155acb; text-decoration: none; }
+.records-filters { display: grid; grid-template-columns: 150px minmax(260px, 1fr) 210px 210px auto; gap: 12px; align-items: end; padding: 16px 0; }
+.records-filters label { margin: 0; }
+.filter-actions { display: flex; gap: 8px; }
+.filter-actions button { padding: 0 16px; white-space: nowrap; }
+.records-workspace { display: grid; grid-template-columns: minmax(340px, 420px) minmax(0, 1fr); min-height: 650px; border: 1px solid #dfe3e8; background: #fff; }
+.conversation-pane, .message-pane { min-width: 0; padding: 16px; }
+.conversation-pane { border-right: 1px solid #dfe3e8; background: #f8fafc; }
+.conversation-row { display: block; width: 100%; height: auto; min-height: 116px; padding: 13px; margin-top: 10px; text-align: left; }
+.conversation-row.active { border-color: #1677ff; box-shadow: inset 3px 0 #1677ff; background: #eef5ff; }
+.conversation-row > span:not(.conversation-title), .conversation-row small { display: block; margin-top: 7px; overflow-wrap: anywhere; }
+.conversation-row small { color: #697386; line-height: 1.45; }
+.conversation-title time, .admin-message time { color: #7b8494; font-size: 12px; }
+.records-section-head { min-height: 52px; align-items: flex-start; }
+.admin-message-list { max-height: 670px; overflow: auto; padding-right: 6px; }
+.admin-message { padding: 13px; margin: 10px 0; border: 1px solid #e1e5ea; border-left: 3px solid #12b886; border-radius: 6px; background: #f8fafc; }
+.admin-message.staff { border-left-color: #1677ff; }
+.admin-message p { margin: 10px 0; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.admin-message small { color: #697386; overflow-wrap: anywhere; }
+.pager { justify-content: center; margin-top: 14px; }
+.pager button { min-height: 34px; padding: 0 14px; }
+.records-placeholder { padding-top: 220px; }
+.summary-drawer { position: fixed; z-index: 20; top: 0; right: 0; width: min(620px, 94vw); height: 100vh; padding: 20px; overflow-y: auto; border-left: 1px solid #cfd7e2; background: #fff; box-shadow: -8px 0 24px rgba(29, 45, 68, .14); }
+.drawer-head { align-items: flex-start; padding-bottom: 12px; border-bottom: 1px solid #e1e6ed; }
+.drawer-head p { margin: 4px 0 0; color: #697386; }
+.drawer-actions { justify-content: flex-end; margin: 14px 0; }
+.summary-section { padding-top: 10px; border-top: 1px solid #edf0f4; }
+.good-practice-list { display: flex; flex-wrap: wrap; gap: 8px; margin: -4px 0 12px; }
+.candidate-editor { padding: 14px; border: 1px solid #cbd5e1; background: #f8fafc; }
+.evidence-check { display: inline-flex; align-items: center; gap: 5px; margin: 0; font-size: 12px; }
+/* 中等屏幕压缩筛选器；手机端改为单列，避免任何字段或按钮重叠。 */
+@media (max-width: 1100px) { .records-filters { grid-template-columns: 1fr 2fr 1fr 1fr; } .filter-actions { grid-column: 1 / -1; } }
+@media (max-width: 760px) { .records-shell { padding: 14px; } .records-header { display: block; } .admin-nav { justify-content: flex-start; margin-top: 12px; } .records-filters { grid-template-columns: 1fr; } .filter-actions { grid-column: auto; } .records-workspace { grid-template-columns: 1fr; } .conversation-pane { border-right: 0; border-bottom: 1px solid #dfe3e8; } .records-placeholder { padding-top: 80px; } }
+
+/* 用户管理页复用管理后台视觉，并为账号表提供稳定的横向空间。 */
+.users-shell { max-width: 1440px; min-height: 100vh; padding: 24px; margin: auto; }
+.registration-panel, .users-list-section { padding: 18px 0; border-bottom: 1px solid #dde2e8; }
+.registration-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr 150px 110px; gap: 12px; align-items: end; }
+.registration-grid label { margin: 0; }
+.registration-submit { padding: 0 16px; }
+.user-list-toolbar { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; }
+.user-list-toolbar p { margin-bottom: 0; color: #697386; }
+.user-search { display: grid; grid-template-columns: minmax(260px, 360px) 80px; gap: 8px; }
+.users-table-wrap { margin-top: 14px; overflow-x: auto; border: 1px solid #dfe3e8; background: #fff; }
+.users-table { width: 100%; min-width: 1120px; border-collapse: collapse; }
+.users-table th, .users-table td { padding: 11px; border-bottom: 1px solid #e5e9ef; text-align: left; vertical-align: middle; }
+.users-table th { background: #f8fafc; color: #4f596b; font-weight: 600; }
+.users-table td:first-child { max-width: 220px; overflow-wrap: anywhere; }
+.users-table input, .users-table select { min-width: 130px; }
+.users-table .account-toggle { width: 18px; min-width: 18px; height: 18px; margin: 0; }
+.password-required { display: inline-block; margin-left: 7px; color: #ad6800; white-space: nowrap; }
+@media (max-width: 1100px) { .registration-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px) { .users-shell { padding: 14px; } .records-header, .user-list-toolbar { display: block; } .registration-grid { grid-template-columns: 1fr; } .user-search { grid-template-columns: 1fr 80px; margin-top: 12px; } }
+
+/* 改密页面保持单一任务布局，首次登录时不展示可跳过操作。 */
+.password-shell { min-height: 100vh; padding: 24px; display: grid; place-items: start center; }
+.password-panel { width: min(440px, 100%); margin-top: 72px; }
+.password-panel > p { color: #697386; line-height: 1.55; }
+.password-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+.password-actions button { min-width: 100px; padding: 0 16px; }
+/* 后台布局基线：统一页面宽度、控件、边框和状态颜色。 */
+.review-shell, .records-shell, .users-shell { max-width: var(--layout-max-width); padding: var(--space-6); }
+.review-workspace, .wiki-workspace, .records-workspace { border-color: var(--color-border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+button { border-radius: var(--radius-md); transition: border-color .15s, background .15s, color .15s; }
+button:not(:disabled):hover { border-color: var(--color-primary); }
+.primary { background: var(--color-primary); border-color: var(--color-primary); }
+.primary:not(:disabled):hover { background: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+.admin-nav a { color: var(--color-text-secondary); font-weight: 600; }
+.admin-nav a:hover { color: var(--color-primary); }
+.status-completed, .status-published { color: var(--color-success); }
+.status-in-progress, .status-pending { color: var(--color-primary); }
+.status-not-started, .status-archived { color: var(--color-text-muted); }
+/* 状态标签统一为三态展示，内部状态仅用于决定可执行操作。 */
+.status-badge { display: inline-flex; align-items: center; min-height: 24px; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.status-completed { color: #237804; background: #f6ffed; }
+.status-in-progress { color: #155acb; background: #eef5ff; }
+.status-not-started { color: #667085; background: #f2f4f7; }
+/* 后台统一导航栏：桌面横向排列，窄屏自动换行，不改变页面业务结构。 */
+.admin-nav { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+.admin-nav a, .admin-nav button { min-height:34px; padding:0 10px; border-radius:6px; }
+.admin-nav a.router-link-active { color:var(--color-primary); background:#eef5ff; }
+.view-switch { border-radius:var(--radius-md); overflow:hidden; }
+@media (max-width:760px) { .admin-nav { justify-content:flex-start; } .admin-nav a, .admin-nav button { padding:0 8px; } }
+/* 聊天记录管理台基线：筛选区、列表和详情在桌面端保持稳定可读。 */
+.records-filters { padding: var(--space-4); margin-bottom: var(--space-4); border:1px solid var(--color-border); border-radius:var(--radius-lg); background:var(--color-surface); }
+.records-workspace { min-height: calc(100vh - 250px); }
+.conversation-pane { overflow:auto; }
+.message-pane { background:var(--color-surface); }
+.summary-drawer { border-left-color:var(--color-border); }
+@media (min-width:1101px) { .records-filters { position:sticky; top:0; z-index:5; } }
+/* 知识目录/RAG 工作区基线：目录、页面列表和正文三栏职责清晰。 */
+.wiki-workspace { min-height: calc(100vh - 250px); }
+.wiki-navigation, .wiki-page-list { background:var(--color-surface-muted); }
+.wiki-detail { background:var(--color-surface); }
+.wiki-pane-head { min-height:52px; background:var(--color-surface); border-color:var(--color-border-light); }
+.wiki-tree-node.selected, .wiki-page-row.active { background:#eef5ff; box-shadow:inset 3px 0 var(--color-primary); }
+.wiki-editor { max-width:860px; margin:0 auto; line-height:1.75; }
+.skill-source { background:var(--color-surface-muted); }
+/* 用户管理表格基线：操作列不换行，表头在滚动时保持可见。 */
+.users-list-section { padding-top:var(--space-6); }
+.users-table-wrap { border-radius:var(--radius-lg); }
+.users-table th { position:sticky; top:0; z-index:1; background:var(--color-surface-muted); }
+.users-table td:last-child { white-space:nowrap; }
+/* Skill 审核台基线：三栏工作区在大屏固定高度，窄屏详情变为抽屉。 */
+.review-workspace { min-height: calc(100vh - 220px); }
+.review-navigation, .review-candidate-list { background: var(--color-surface-muted); }
+.review-detail { background: var(--color-surface); }
+.review-filter-scroll, .review-list-scroll { scrollbar-color: #cbd5e1 transparent; }
+.review-detail-form h2 { color: var(--color-text); }
+.review-actions button { min-width: 96px; }
+@media (min-width: 981px) { .review-header { position: sticky; top: 0; z-index: 10; background: var(--color-page); } }
+/* 快速审核工作台：全屏单卡片，减少决策噪音。 */
+.quick-review-shell { min-height:100vh; padding:28px clamp(20px,6vw,96px); background:var(--color-page); }
+.quick-review-header { display:flex; align-items:center; gap:28px; max-width:1100px; margin:0 auto 24px; }
+.quick-review-header h1 { margin:0 0 6px; font-size:28px; }
+.quick-review-header p { margin:0; color:var(--color-text-secondary); }
+.quick-review-count { margin-left:auto; padding:12px 18px; border-radius:999px; background:#eef5ff; color:var(--color-primary); white-space:nowrap; }
+.quick-review-count strong { font-size:22px; }
+.quick-review-card { max-width:1100px; min-height:calc(100vh - 180px); margin:0 auto; padding:clamp(24px,4vw,56px); border:1px solid var(--color-border); border-radius:16px; background:#fff; box-shadow:0 12px 40px rgba(16,24,40,.08); }
+.quick-review-card label { display:block; max-width:900px; margin:0 auto 22px; font-size:16px; font-weight:600; }
+.quick-review-card input, .quick-review-card textarea { margin-top:10px; font-size:18px; }
+.quick-score { width:max-content; margin:0 auto 28px; padding:8px 14px; border-radius:999px; background:#eef5ff; color:var(--color-primary); }
+.quick-score strong { margin-left:6px; font-size:24px; }
+.quick-review-actions { display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:900px; margin:32px auto 0; }
+.quick-review-actions button { min-height:68px; border:0; border-radius:12px; color:#fff; font-size:22px; font-weight:700; }
+.quick-reject { background:#e5484d; } .quick-reject:hover { background:#c92a30; }
+.quick-approve { background:#16a36a; } .quick-approve:hover { background:#087f50; }
+.quick-hint { margin:18px 0 0; text-align:center; color:var(--color-text-muted); }
+.quick-empty { display:grid; min-height:55vh; place-items:center; color:var(--color-text-secondary); font-size:20px; }
+.quick-error { max-width:1100px; margin:16px auto; }
+@media(max-width:700px){.quick-review-shell{padding:18px 12px}.quick-review-header{display:block}.quick-review-count{display:inline-block;margin:14px 0 0}.quick-review-actions{gap:10px}.quick-review-actions button{font-size:18px}}
+/* 快速审核正文：黑色高对比、Markdown 排版、首屏尽量完整展示。 */
+.quick-review-card, .quick-review-card input, .quick-review-card textarea, .quick-review-card label { color:#000; }
+.quick-review-card p, .quick-review-card h1, .quick-review-card h2, .quick-review-card h3 { color:#000; }
+.quick-content { max-width:900px; margin:0 auto 22px; }
+.quick-content h2 { margin:0 0 10px; font-size:16px; }
+.quick-markdown { min-height:220px; max-height:calc(100vh - 390px); overflow:auto; padding:18px 20px; border:1px solid #cfd6df; border-radius:8px; color:#000; background:#fff; font-size:17px; line-height:1.75; white-space:normal; }
+.quick-markdown h1,.quick-markdown h2,.quick-markdown h3 { margin:10px 0 6px; }
+.quick-markdown strong { font-weight:700; color:#000; }
+.quick-markdown code { padding:2px 5px; border-radius:4px; background:#f1f3f5; font-family:Consolas,monospace; }
+.quick-hint { color:#000; }
+/* 快速审核专用视觉：只保留核心任务，弱化退出和快捷键提示。 */
+.quick-logout { min-height:38px; padding:0 16px; border:1px solid #d0d5dd; border-radius:999px; background:#fff; color:#667085; font-size:14px; }
+.quick-logout:hover { border-color:#98a2b3; background:#f8fafc; color:#344054; }
+.quick-hint { display:block; width:max-content; margin:20px auto 0; padding:7px 14px; border:1px solid #e4e7ec; border-radius:999px; background:#f8fafc; color:#667085; font-size:13px; }
+.quick-review-header { align-items:flex-start; }
+.quick-review-header > .quick-logout { margin-left:0; }
+@media(max-width:760px){ .quick-review-header > .quick-logout { margin-top:14px; } }
+.quick-admin-nav { margin-left:auto; } .quick-admin-nav a { color:var(--color-text-secondary); text-decoration:none; font-weight:600; padding:8px 10px; border-radius:8px; } .quick-admin-nav a:hover { color:var(--color-primary); background:#eef5ff; }
+.quick-review-count { color:#d92d20; background:#fff1f0; } .quick-review-count strong { color:#d92d20; }
+.quick-admin-nav .quick-logout { min-height:34px; padding:0 10px; border:0; border-radius:8px; background:transparent; color:var(--color-text-secondary); font-size:15px; font-weight:600; } .quick-admin-nav .quick-logout:hover { background:#eef5ff; color:var(--color-primary); border:0; }
+/* 聊天记录和用户管理沿用快速审核的简洁基线。 */
+.records-shell, .users-shell { color:#000; }
+.records-header p, .records-section-head p, .user-list-toolbar p { color:#344054; }
+.markdown-body { color:#000; line-height:1.75; white-space:normal; overflow-wrap:anywhere; }
+.markdown-body h1,.markdown-body h2,.markdown-body h3 { margin:8px 0; color:#000; }
+.markdown-body strong { color:#000; }
+.markdown-body code { padding:2px 5px; border-radius:4px; background:#f2f4f7; }
+.login-panel { border-radius:16px; box-shadow:0 12px 40px rgba(16,24,40,.08); }
+/* 聊天记录全屏工作台：最大化内容区域，减少无意义滚动。 */
+.records-shell { width:100%; max-width:none; min-height:100vh; padding:24px 32px; }
+.records-header { max-width:1480px; margin:0 auto 18px; }
+.records-filters { max-width:1480px; margin:0 auto 18px; }
+.records-workspace { width:100%; max-width:1480px; height:calc(100vh - 220px); min-height:600px; margin:0 auto; overflow:hidden; }
+.conversation-pane, .message-pane { min-height:0; overflow:hidden; }
+.admin-message-list { max-height:none; height:calc(100% - 110px); overflow-y:auto; scrollbar-width:thin; }
+.summary-drawer { display:none !important; }
+.evidence-check { display:none !important; }
+.message-actions button:first-child { display:none; }
+.records-filters input[type="datetime-local"] { min-height:44px; border:1px solid #cbd5e1; border-radius:12px; background:linear-gradient(#fff,#f8fafc); color:#000; font-weight:600; box-shadow:0 1px 2px rgba(16,24,40,.05); }
+.records-filters input[type="datetime-local"]:focus { border-color:var(--color-primary); outline:3px solid #dbeafe; }
+@media (min-width:1500px){ .records-shell { padding-left:48px; padding-right:48px; } .records-workspace,.records-header,.records-filters { max-width:none; } }
+@media (max-width:760px){ .records-shell { padding:16px 12px; } .records-workspace { height:auto; min-height:0; overflow:visible; } .conversation-pane,.message-pane { overflow:visible; } .admin-message-list { height:520px; } }
+/* 审核与聊天记录共用全屏工作区；聊天记录只允许左侧会话栏滚动。 */
+.review-shell { width:100%; max-width:none; padding:28px 48px; }
+.quick-review-shell { width:100%; }
+@media (min-width:1500px){ .review-shell { padding-left:72px; padding-right:72px; } }
+.records-workspace { grid-template-columns:minmax(300px,380px) minmax(0,1fr); }
+.conversation-pane { overflow-y:auto; overflow-x:hidden; }
+.message-pane { overflow:hidden; }
+.admin-message-list { height:calc(100% - 110px); max-height:none; overflow:hidden; }
+.message-pane .pager { margin-top:10px; }
+/* 快速审核卡片占满工作区，内容与操作集中在首屏。 */
+.quick-review-card { width:100%; max-width:none; min-height:calc(100vh - 150px); }
+.quick-review-card .quick-content, .quick-review-card label { max-width:1100px; }
+/* 用户管理与审核台统一全屏工作区及导航交互。 */
+.users-shell { width:100%; max-width:none; min-height:100vh; padding:28px 48px; }
+.users-shell .records-header { max-width:none; margin:0 0 22px; padding:0 0 18px; }
+.users-shell .registration-panel, .users-shell .users-list-section { max-width:none; padding:22px 0; }
+.users-shell .registration-panel { margin-bottom:4px; }
+.users-shell .users-table-wrap { border-radius:var(--radius-lg); box-shadow:0 1px 3px rgba(16,24,40,.06); }
+.users-shell .users-table th { color:#000; background:#f5f7fa; }
+.users-shell .users-table td { color:#000; }
+.users-shell .quick-admin-nav .quick-logout { min-height:34px; padding:0 10px; border:0; border-radius:8px; background:transparent; color:var(--color-text-secondary); font-size:15px; font-weight:600; }
+.users-shell .quick-admin-nav .quick-logout:hover { background:#eef5ff; color:var(--color-primary); }
+@media (max-width:760px){ .users-shell { padding:18px 14px; } }
+.users-shell .users-table { min-width:720px; }
+.users-shell .users-table .danger { color:#b42318; border-color:#fecdca; background:#fff5f4; }
+.users-shell .users-table .danger:hover { color:#fff; border-color:#d92d20; background:#d92d20; }
+/* 登录页：窄屏侧边栏也保持完整居中，标题、字段标签和操作统一居中。 */
+.users-shell:has(> .login-panel) { display:flex; flex-direction:column; min-height:100vh; }
+.users-shell:has(> .login-panel) > .records-header { width:100%; }
+.users-shell > .login-panel { width:min(420px, calc(100% - 32px)); margin:auto; text-align:center; }
+.users-shell > .login-panel h2, .users-shell > .login-panel p { text-align:center; }
+.users-shell > .login-panel label { text-align:center; }
+.users-shell > .login-panel input { text-align:center; }
+.users-shell > .login-panel button { display:block; width:100%; }
+/* 统一三类后台登录体验：登录任务占满视口，表单本身保持舒适阅读宽度。 */
+.users-shell:has(> .login-panel) { padding:0 48px 48px; }
+.users-shell:has(> .login-panel) > .records-header { padding-top:28px; }
+.users-shell:has(> .login-panel) > .login-panel { flex:1; width:100%; max-width:none; margin:0; display:grid; place-items:center; align-content:center; padding:64px 24px; }
+.users-shell:has(> .login-panel) > .login-panel h2,
+.users-shell:has(> .login-panel) > .login-panel label,
+.users-shell:has(> .login-panel) > .login-panel button { width:min(560px,100%); }
+/* 视觉升级：现代科技后台的克制排版与层次化表面。 */
+:root { --color-page:#f4f7fb; --color-surface:#ffffff; --color-border:#e4eaf2; --color-text:#101828; --color-text-secondary:#475467; --color-primary:#2563eb; --radius-lg:18px; --radius-md:10px; }
+body { background:radial-gradient(circle at 10% 0%,#eef4ff 0,#f7f9fc 34%,#f4f7fb 100%); color:var(--color-text); font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif; letter-spacing:.01em; }
+h1,h2,h3 { letter-spacing:-.025em; color:#101828; }
+.records-header { border-bottom-color:#e7edf5; }
+.records-header h1 { font-size:clamp(26px,3vw,34px); font-weight:750; }
+.records-header p { color:#667085; }
+.admin-nav { padding:6px; border:1px solid #e4eaf2; border-radius:14px; background:rgba(255,255,255,.8); box-shadow:0 4px 16px rgba(16,24,40,.05); backdrop-filter:blur(10px); }
+.admin-nav a,.admin-nav button { border-radius:9px; transition:all .18s ease; }
+.admin-nav a.router-link-active { box-shadow:0 2px 6px rgba(37,99,235,.14); }
+button { font-weight:650; box-shadow:0 1px 2px rgba(16,24,40,.06); }
+button.primary { background:linear-gradient(135deg,#2563eb,#4f46e5); border-color:#2563eb; }
+button.primary:hover { transform:translateY(-1px); box-shadow:0 6px 14px rgba(37,99,235,.22); }
+.panel,.registration-panel,.users-list-section,.records-filters,.records-workspace,.review-workspace { background:rgba(255,255,255,.88); border-color:#e4eaf2; box-shadow:0 10px 30px rgba(16,24,40,.06); }
+.login-panel { border-radius:22px; box-shadow:0 20px 50px rgba(31,41,55,.10); }
+/* 统一登录页：采用左右分栏的产品化布局，减少空白并强化品牌与操作层级。 */
+.auth-shell { min-height:100vh; display:grid; place-items:center; padding:36px 28px; background:radial-gradient(circle at 8% 12%,rgba(120,160,255,.22),transparent 34%),linear-gradient(135deg,#f5f8ff 0%,#eef3fb 48%,#f8fafc 100%); }
+.auth-layout { width:min(100%,1080px); min-height:590px; display:grid; grid-template-columns:minmax(0,1.08fr) minmax(390px,.92fr); overflow:hidden; border:1px solid rgba(255,255,255,.9); border-radius:28px; background:rgba(255,255,255,.78); box-shadow:0 26px 70px rgba(31,55,95,.16); backdrop-filter:blur(18px); }
+.auth-intro { position:relative; display:flex; flex-direction:column; justify-content:center; padding:64px 70px; overflow:hidden; color:#fff; background:linear-gradient(145deg,#173e91 0%,#2459c6 52%,#4b55c9 100%); }
+.auth-intro::after { position:absolute; width:360px; height:360px; right:-150px; bottom:-160px; border:1px solid rgba(255,255,255,.2); border-radius:50%; box-shadow:0 0 0 32px rgba(255,255,255,.04),0 0 0 64px rgba(255,255,255,.03); content:""; }
+.brand-mark { display:grid; place-items:center; width:46px; height:46px; margin-bottom:28px; border:1px solid rgba(255,255,255,.34); border-radius:14px; background:rgba(255,255,255,.16); font-size:22px; font-weight:800; box-shadow:0 8px 20px rgba(10,35,95,.2); }
+.eyebrow { margin:0 0 12px; color:#6885c7; font-size:11px; font-weight:800; letter-spacing:.16em; }
+.auth-intro .eyebrow { color:#bcd0ff; }
+.auth-intro h1 { margin:0; color:#fff; font-size:clamp(34px,4vw,50px); line-height:1.18; letter-spacing:-.05em; }
+.auth-intro h1 strong { color:#d7e4ff; font-weight:750; }
+.auth-description { max-width:430px; margin:24px 0 40px; color:#d9e5ff; font-size:15px; line-height:1.8; }
+.auth-highlights { display:grid; gap:13px; color:#e4edff; font-size:13px; }
+.auth-highlights span { display:flex; align-items:center; gap:12px; }
+.auth-highlights b { display:inline-grid; place-items:center; width:28px; height:22px; border:1px solid rgba(255,255,255,.3); border-radius:7px; color:#fff; font-size:10px; letter-spacing:.05em; }
+.auth-card { align-self:center; width:min(100%,430px); margin:0 auto; padding:46px 48px 30px; border:0; border-radius:0; background:rgba(255,255,255,.9); box-shadow:none; }
+.auth-card-heading h2 { margin:0 0 8px; font-size:30px; letter-spacing:-.04em; }
+.auth-card-heading > p:last-child { margin:0 0 30px; color:#667085; font-size:14px; }
+.auth-card label { margin:0 0 18px; color:#344054; font-size:13px; font-weight:650; }
+.auth-card input { min-height:48px; margin-top:8px; padding:0 14px; border-radius:11px; font-size:14px; }
+.auth-submit { display:flex; align-items:center; justify-content:center; gap:12px; width:100%; min-height:50px; margin-top:24px; border-radius:11px; font-size:15px; }
+.auth-submit span { font-size:20px; line-height:1; transition:transform .18s ease; }
+.auth-submit:hover span { transform:translateX(3px); }
+.auth-footer { margin:32px 0 0; color:#98a2b3; font-size:12px; text-align:center; }
+@media(max-width:760px){ .auth-shell { padding:18px 14px; } .auth-layout { display:block; min-height:0; } .auth-intro { padding:34px 28px 30px; } .auth-intro h1 { font-size:34px; } .auth-description { margin:16px 0 24px; } .auth-highlights { grid-template-columns:1fr 1fr; gap:10px; font-size:12px; } .auth-highlights span:last-child { grid-column:1/-1; } .auth-card { width:100%; padding:34px 28px 26px; } }
+/* 侧边栏只保留回复主任务；会话纪要通过右上角 Tab 按需切换，首屏无需滚动。 */
+.sidebar-tabs { display:flex; justify-content:flex-end; gap:4px; margin:12px 0 10px; padding:3px; border:1px solid #e4eaf2; border-radius:10px; background:#f7f9fc; }
+.sidebar-tabs button { min-height:32px; padding:0 13px; border:0; border-radius:7px; background:transparent; color:#667085; font-size:13px; box-shadow:none; }
+.sidebar-tabs button.active { background:#fff; color:#155acb; font-weight:700; box-shadow:0 1px 4px rgba(16,24,40,.1); }
+.summary-tab-panel { margin-top:0; min-height:210px; }
+.summary-tab-panel .summary-text { margin-top:12px; font-size:14px; line-height:1.65; }
+.summary-live { padding:4px 8px; border-radius:999px; background:#ecfdf3; color:#039855; font-size:11px; }
+.reply-panel { margin-top:0; padding:14px 16px 16px; }
+.reply-panel .reply-heading { align-items:center; margin-bottom:8px; }
+.reply-panel .reply-heading h2 { margin-bottom:0; }
+.reply-detail { margin:6px 0 10px; }
+.reply-detail summary { min-height:40px; padding:8px 36px 8px 12px; }
+.reply-detail p { padding:9px 12px; margin:0; font-size:13px; line-height:1.5; }
+.sidebar-reply { max-height:245px; overflow:auto; padding:0 2px; font-size:14px; line-height:1.65; }
+.reply-panel .button-grid { margin-top:12px; }
+.reply-panel .full { margin-top:9px; }
+@media(max-height:760px){ .sidebar-shell { padding-top:12px; } .sidebar-reply { max-height:190px; } .reply-panel { padding-top:11px; } }
+input,select,textarea { border-color:#d7e0ec; border-radius:10px; background:#fff; transition:border-color .15s,box-shadow .15s; }
+input:focus,select:focus,textarea:focus { border-color:#6b8df5; box-shadow:0 0 0 4px rgba(37,99,235,.12); outline:0; }
+.users-table-wrap { border-color:#e4eaf2; box-shadow:0 8px 24px rgba(16,24,40,.05); }
+.users-table th { background:#f7f9fc; color:#344054; }
+.users-table tr:hover td { background:#f9fbff; }
+.quick-review-card { border-radius:22px; box-shadow:0 18px 44px rgba(16,24,40,.08); }
+@media(max-width:760px){ .admin-nav { width:100%; justify-content:center; } }
+/* 用户管理卡片留白与操作间距 */
+.registration-panel { margin:10px 0 26px; padding:32px 40px; }
+.registration-panel .records-section-head { padding:0 4px 10px; }
+.registration-panel .records-section-head p { margin-left:4px; }
+.users-list-section { margin:0; padding:30px 40px; }
+.user-actions { display:flex; align-items:center; gap:12px; padding-left:16px !important; }
+.user-actions .danger { margin-left:2px; }
+@media(max-width:760px){ .registration-panel,.users-list-section { padding:24px 18px; } .user-actions { gap:12px; padding-left:12px !important; } }
+/* 用户管理完整布局留白：避免移动窄屏下各模块贴边堆叠。 */
+.users-shell { padding:32px 40px 56px; }
+.users-shell .records-header { margin-bottom:28px; }
+.users-shell .registration-panel { margin:0 0 32px; padding:32px 36px 36px; border:1px solid #e4eaf2; border-radius:20px; }
+.users-shell .registration-panel .records-section-head { margin-bottom:22px; }
+.users-shell .registration-grid { gap:20px 18px; }
+.users-shell .registration-grid label { gap:8px; }
+.users-shell .registration-grid input,.users-shell .registration-grid select { min-height:48px; }
+.users-shell .users-list-section { margin:0; padding:32px 36px 36px; border:1px solid #e4eaf2; border-radius:20px; }
+.users-shell .user-list-toolbar { margin-bottom:22px; }
+.users-shell .users-table-wrap { margin-top:0; }
+.users-shell .users-table th,.users-shell .users-table td { padding:18px 20px; }
+@media(max-width:760px){ .users-shell{padding:20px 14px 40px}.users-shell .registration-panel,.users-shell .users-list-section{padding:26px 18px 30px;border-radius:16px}.users-shell .registration-grid{gap:16px}.users-shell .users-table th,.users-shell .users-table td{padding:16px 18px} }

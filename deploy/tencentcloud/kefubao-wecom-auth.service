@@ -1,0 +1,18 @@
+[Unit]
+Description=KefuBao WeCom auth backend
+After=network.target docker.service
+Wants=docker.service
+
+[Service]
+Environment=KEFUBAO_ENV=production
+Type=simple
+WorkingDirectory=/opt/kefubao/wecom-miniprogram
+EnvironmentFile=/opt/kefubao/wecom-miniprogram/.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/kefubao/wecom-miniprogram/.venv/bin/python -m uvicorn backend.app:app --host 127.0.0.1 --port 8787
+Restart=always
+RestartSec=3
+User=ubuntu
+
+[Install]
+WantedBy=multi-user.target

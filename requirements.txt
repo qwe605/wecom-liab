@@ -1,0 +1,14 @@
+# -*- coding: utf-8 -*-
+fastapi>=0.115,<1
+uvicorn[standard]>=0.34,<1
+pydantic>=2.10,<3
+SQLAlchemy>=2.0,<3
+PyMySQL>=1.1,<2
+alembic>=1.13,<2
+langgraph>=1.2,<2
+json-repair>=0.44,<1
+requests>=2.32,<3
+cryptography>=50,<51
+mcp>=1.29,<2
+# Windows 不自带 IANA 时区数据库，离线会话时间归一化需要此包。
+tzdata>=2025.2; platform_system == "Windows"

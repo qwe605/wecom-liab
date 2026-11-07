@@ -1,0 +1,17 @@
+[Unit]
+Description=KefuBao automatic WeCom message archive synchronization
+After=network.target docker.service kefubao-wecom-auth.service
+Wants=docker.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/kefubao/wecom-miniprogram
+EnvironmentFile=/opt/kefubao/wecom-miniprogram/.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/kefubao/wecom-miniprogram/.venv/bin/python -m backend.services.automatic_sync_service
+Restart=always
+RestartSec=3
+User=ubuntu
+
+[Install]
+WantedBy=multi-user.target

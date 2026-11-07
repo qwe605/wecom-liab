@@ -1,0 +1,11 @@
+[Unit]
+Description=Synchronize KefuBao WeCom profiles every day
+
+[Timer]
+OnCalendar=*-*-* 02:40:00 Asia/Shanghai
+Persistent=true
+RandomizedDelaySec=10m
+Unit=kefubao-profile-sync.service
+
+[Install]
+WantedBy=timers.target

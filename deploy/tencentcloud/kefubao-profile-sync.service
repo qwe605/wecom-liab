@@ -1,0 +1,11 @@
+[Unit]
+Description=KefuBao WeCom employee and customer profile sync
+After=network-online.target docker.service
+Wants=network-online.target docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/kefubao/wecom-miniprogram
+EnvironmentFile=/opt/kefubao/wecom-miniprogram/.env
+ExecStart=/opt/kefubao/wecom-miniprogram/.venv/bin/python -m backend.services.profile_sync_service
+User=ubuntu
